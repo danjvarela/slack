@@ -17,17 +17,26 @@ const SignupForm = (props) => {
       validationSchema={Yup.object({
         email: Yup.string().required("Please input an email").email("Invalid email"),
         password: Yup.string().required("Please input a password"),
-        password_confirmation: Yup.string().required(
-          "Please retype the password for confirmation"
-        ),
+        password_confirmation: Yup.string()
+          .required("Please retype the password for confirmation")
+          .oneOf([Yup.ref("password")], "Passwords do not match"),
       })}
     >
       <Card {...props} gap={5}>
         <VStack as={Form} w="full" gap={5}>
           <VStack w="full" gap={1}>
-            <Input label="Email" name="email" placeholder="user@example.com" />
-            <PasswordInput label="Password" name="password" />
-            <PasswordInput label="Confirm Password" name="password_confirmation" />
+            <Input
+              label="Email"
+              name="email"
+              placeholder="user@example.com"
+              variant="filled"
+            />
+            <PasswordInput label="Password" name="password" variant="filled" />
+            <PasswordInput
+              label="Confirm Password"
+              name="password_confirmation"
+              variant="filled"
+            />
           </VStack>
           <Button w="full" colorScheme="purple" type="submit">
             Sign up

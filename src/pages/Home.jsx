@@ -1,6 +1,4 @@
-import {Box, Center, VStack, Text, HStack, Heading} from "@chakra-ui/react";
-import ColorModeSwitcher from "components/ColorModeSwitcher";
-import Header from "layouts/Header";
+import {Center, VStack, Text, Heading} from "@chakra-ui/react";
 import {ReactComponent as SlackLogo} from "assets/slack.svg";
 import {ReactComponent as PeopleSvg} from "assets/people.svg";
 import LoginForm from "features/authentication/components/LoginForm";
