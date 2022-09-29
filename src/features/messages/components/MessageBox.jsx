@@ -18,9 +18,10 @@ const MessageBox = () => {
       validationSchema={Yup.object({
         body: Yup.string().required(),
       })}
-      onSubmit={async (values) => {
+      onSubmit={(values, {resetForm}) => {
         const completeBody = {...values, receiver_id: "3", receiver_class: "User"};
-        await sendMessage(completeBody, {headers: auth.headers});
+        sendMessage(completeBody, {headers: auth.headers});
+        resetForm({body: ""});
       }}
     >
       <HStack as={Form} w="full">
