@@ -12,6 +12,7 @@ const sendMessage = async (values, opts = {}) => {
 
 const MessageBox = () => {
   const {auth} = useAuth();
+
   return (
     <Formik
       initialValues={{body: ""}}
