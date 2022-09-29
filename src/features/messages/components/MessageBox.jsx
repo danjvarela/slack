@@ -7,7 +7,7 @@ import {useAuth} from "context/AuthContextProvider";
 
 const sendMessage = async (values, opts = {}) => {
   const response = await postRequest("/api/v1/messages", values, opts);
-  console.log(response);
+  return response.data;
 };
 
 const MessageBox = () => {
