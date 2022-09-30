@@ -1,23 +1,12 @@
-import {ListItem, Button, Text} from "@chakra-ui/react";
+import {Avatar, Text} from "@chakra-ui/react";
+import {faker} from "@faker-js/faker";
 
 const ChannelItem = ({name}) => {
   return (
-    <ListItem w="full">
-      <Button
-        size="sm"
-        w="full"
-        maxW="full"
-        justifyContent="flex-start"
-        variant="outline"
-        borderWidth={0}
-        borderRadius={0}
-        px={7}
-      >
-        <Text w="full" flexWrap="wrap" noOfLines={1} textAlign="left">
-          {name}
-        </Text>
-      </Button>
-    </ListItem>
+    <>
+      <Avatar size="xs" name={name} src={faker.internet.avatar()} />
+      <Text>{name}</Text>
+    </>
   );
 };
 

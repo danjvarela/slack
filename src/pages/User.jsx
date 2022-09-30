@@ -1,12 +1,11 @@
-import {VStack, HStack, Button, Text, Avatar, List, ListItem} from "@chakra-ui/react";
-import {FaEdit} from "react-icons/fa";
+import {VStack, HStack, Text, Avatar, List, ListItem} from "@chakra-ui/react";
 import ColorModeSwitcher from "components/ColorModeSwitcher";
 import Header from "layouts/Header";
 import {AuthContextProvider} from "context/AuthContextProvider";
 import {ChannelContextProvider} from "context/ChannelContextProvider";
 import MessageBox from "features/messages/components/MessageBox";
-import Channels from "features/channels/components/Channels";
 import Sidebar from "layouts/Sidebar";
+import Channels from "features/channels/components/Channels";
 
 const App = () => {
   return (
@@ -17,7 +16,9 @@ const App = () => {
             <ColorModeSwitcher />
           </Header>
           <HStack w="full" flexGrow={1} spacing={0}>
-            <Sidebar />
+            <Sidebar>
+              <Channels />
+            </Sidebar>
             <VStack flexGrow={1} h="full">
               <Header size="sm" variant="outlined" justifyContent="space-between">
                 <Text>Receiver Name</Text>
