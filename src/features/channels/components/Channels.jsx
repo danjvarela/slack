@@ -14,10 +14,10 @@ import {useChannels} from "context/ChannelContextProvider";
 import {FaPlus} from "react-icons/fa";
 import {isEmpty} from "utils";
 import ChannelItem from "./ChannelItem";
+import AddChannelForm from "./AddChannelForm";
 
 const Channels = () => {
-  const {auth} = useAuth();
-  const {channels, addChannel, getChannels} = useChannels();
+  const {channels} = useChannels();
 
   return (
     <Accordion defaultIndex={[0]} allowMultiple w="full" borderWidth={0}>
@@ -29,7 +29,7 @@ const Channels = () => {
               Channels
             </Heading>
           </AccordionButton>
-          <IconButton icon={<FaPlus />} isRound variant="ghost" size="sm" />
+          <AddChannelForm />
         </HStack>
         <AccordionPanel p={0}>
           <List spacing={2} w="full">

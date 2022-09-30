@@ -6,6 +6,7 @@ import {AuthContextProvider} from "context/AuthContextProvider";
 import {ChannelContextProvider} from "context/ChannelContextProvider";
 import MessageBox from "features/messages/components/MessageBox";
 import Channels from "features/channels/components/Channels";
+import Sidebar from "layouts/Sidebar";
 
 const App = () => {
   return (
@@ -16,19 +17,7 @@ const App = () => {
             <ColorModeSwitcher />
           </Header>
           <HStack w="full" flexGrow={1} spacing={0}>
-            <VStack
-              w={56}
-              h="full"
-              borderRightWidth={1}
-              display={{base: "none", md: "unset"}}
-            >
-              <Header size="sm" variant="outlined" px={0}>
-                <Button w="full" borderRadius={0} gap={1}>
-                  New Message <FaEdit />
-                </Button>
-              </Header>
-              <Channels />
-            </VStack>
+            <Sidebar />
             <VStack flexGrow={1} h="full">
               <Header size="sm" variant="outlined" justifyContent="space-between">
                 <Text>Receiver Name</Text>
