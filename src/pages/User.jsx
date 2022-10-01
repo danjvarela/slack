@@ -29,19 +29,11 @@ const User = () => {
                 <VStack w="full" flexGrow={1} px={5}>
                   <List w="full" spacing={5}>
                     <ListItem display="flex" gap={3} alignItems="center">
-                      <Avatar
-                        name="Dan Abrahmov"
-                        src="https://bit.ly/dan-abramov"
-                        size="sm"
-                      />
+                      <Avatar name="Dan Abrahmov" size="sm" />
                       <Text>Hi</Text>
                     </ListItem>
                     <ListItem display="flex" gap={3} alignItems="center">
-                      <Avatar
-                        name="Dan Abrahmov"
-                        src="https://bit.ly/dan-abramov"
-                        size="sm"
-                      />
+                      <Avatar name="Dan Abrahmov" size="sm" />
                       <Text>Hi</Text>
                     </ListItem>
                   </List>

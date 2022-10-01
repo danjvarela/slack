@@ -20,7 +20,7 @@ const SidebarGroup = ({children, name, modifiers}) => {
         </AccordionButton>
         {modifiers}
       </HStack>
-      <AccordionPanel px={0} py={0} w="full">
+      <AccordionPanel px={0} py={0} w="full" maxH="sm" overflow="auto">
         <List w="full">{children}</List>
       </AccordionPanel>
     </AccordionItem>

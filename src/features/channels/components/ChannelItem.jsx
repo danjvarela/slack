@@ -5,7 +5,7 @@ const ChannelItem = ({channel}) => {
   const {name} = channel;
   return (
     <SidebarItem>
-      <Avatar size="xs" name={name} src={`https://www.gravatar.com/avatar/?d=retro`} />
+      <Avatar size="xs" name={name} />
       <Text>{name}</Text>
     </SidebarItem>
   );

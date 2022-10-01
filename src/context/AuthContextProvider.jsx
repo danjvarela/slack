@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useState, useCallback} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {postRequest} from "lib/axios";
 import {useNavigate} from "react-router-dom";
@@ -10,10 +10,10 @@ const useAuth = () => useContext(AuthContext);
 const AuthContextProvider = ({children}) => {
   const [errors, setErrors] = useState([]);
   const [userCookie, setUserCookie] = useCookies(["user"]);
-  const [auth, setAuth] = useState(userCookie?.auth ?? {data: {}, headers: {}});
+  const [auth, setAuth] = useState(userCookie?.auth ?? {});
   const navigate = useNavigate();
 
-  const login = useCallback(async (values) => {
+  const login = async (values) => {
     let loginResponse;
     try {
       loginResponse = await postRequest("/api/v1/auth/sign_in", values);
@@ -23,9 +23,9 @@ const AuthContextProvider = ({children}) => {
     }
     const {data, headers} = loginResponse;
     setAuth({...data, headers}, {path: "/"});
-  }, []);
+  };
 
-  const signup = useCallback(async (values) => {
+  const signup = async (values) => {
     let signupResponse;
     try {
       signupResponse = await postRequest("/api/v1/auth/", values);
@@ -34,11 +34,11 @@ const AuthContextProvider = ({children}) => {
       return;
     }
     if (signupResponse) login(values);
-  }, []);
+  };
 
   useEffect(() => {
     setUserCookie("auth", auth);
-    if (auth.data.id) navigate(`/users/${auth.data.id}`);
+    if (auth.data?.id) navigate(`/users/${auth.data.id}`);
   }, [auth]);
 
   return (
