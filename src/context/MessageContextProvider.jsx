@@ -12,6 +12,11 @@ const MessageContextProvider = ({children}) => {
   const [messages, setMessages] = useState([]);
   const [errors, setErrors] = useState([]);
 
+  const handleError = (errors, fn) => {
+    if (!isEmpty(errors)) return setErrors(Array.isArray(errors) ? errors : [errors]);
+    fn();
+  };
+
   const sendMessage = async (content) => {
     const response = await postRequest("/api/v1/messages", content, {
       headers: auth.headers,
@@ -25,8 +30,8 @@ const MessageContextProvider = ({children}) => {
       params: params,
       headers: auth.headers,
     });
-    if (!isEmpty(response.data.errors)) return setErrors(response.data.errors);
-    setMessages(response.data.data ?? []);
+    const {errors, data} = response;
+    handleError(errors, () => setMessages(data ?? []));
   };
 
   return (

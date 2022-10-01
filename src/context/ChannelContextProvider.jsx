@@ -12,18 +12,21 @@ const ChannelContextProvider = ({children}) => {
   const [errors, setErrors] = useState([]);
   const [channels, setChannels] = useState([]);
 
+  const handleError = (errors, fn) => {
+    if (!isEmpty(errors)) return setErrors(Array.isArray(errors) ? errors : [errors]);
+    fn();
+  };
+
   const getChannels = async () => {
-    if (!isEmpty(auth.headers)) {
-      const response = await getRequest("/api/v1/channels", {headers: auth.headers});
-      if (!isEmpty(response.data.errors)) return setErrors(response.data.errors);
-      setChannels(response.data.data ?? []);
-    }
+    const response = await getRequest("/api/v1/channels", {headers: auth.headers});
+    const {errors, data} = response.data;
+    handleError(errors, () => setChannels(data ?? []));
   };
 
   const createChannel = async (body) => {
     const response = await postRequest("/api/v1/channels", body, {headers: auth.headers});
-    if (!isEmpty(response.data.errors)) return setErrors(response.data.errors);
-    setChannels([...channels, response.data.data ?? []]);
+    const {errors, data} = response.data;
+    handleError(errors, () => setChannels([...channels, data ?? []]));
   };
 
   const getChannelDetails = async (id) => {
@@ -31,16 +34,18 @@ const ChannelContextProvider = ({children}) => {
       params: {id: id},
       headers: auth.headers,
     });
-    if (!isEmpty(response.data.errors)) return response.data.errors;
-    return response.data.data ?? {};
+    const {errors, data} = response.data;
+    if (!isEmpty(errors)) return errors;
+    return data ?? {};
   };
 
   const addMemberToChannel = async (body) => {
     const response = await postRequest("/api/v1/channel/add_member", body, {
       headers: auth.headers,
     });
-    if (!isEmpty(response.data.errors)) return response.data.errors;
-    return response.data.data ?? {};
+    const {errors, data} = response.data;
+    if (!isEmpty(errors)) return errors;
+    return data ?? {};
   };
 
   useEffect(() => {

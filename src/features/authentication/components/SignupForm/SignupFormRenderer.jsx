@@ -12,7 +12,7 @@ const SignupFormRenderer = ({formikProps, errors, ...props}) => {
       <Card {...props} gap={5}>
         <VStack as={Form} w="full" gap={5}>
           {!isEmpty(errors)
-            ? errors.map((error, index) => (
+            ? errors?.map((error, index) => (
                 <Alert status="error" key={index}>
                   <AlertIcon />
                   {error}

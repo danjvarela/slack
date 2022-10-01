@@ -22,7 +22,7 @@ const AuthContextProvider = ({children}) => {
       return;
     }
     const {data, headers} = loginResponse;
-    setAuth({...data, headers}, {path: "/"});
+    setAuth({...data, headers});
   };
 
   const signup = async (values) => {

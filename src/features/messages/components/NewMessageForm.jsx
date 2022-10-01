@@ -7,25 +7,23 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  IconButton,
   Button,
   Alert,
   AlertIcon,
   VStack,
 } from "@chakra-ui/react";
 import {Formik, Form, Field} from "formik";
-import {FaPlus} from "react-icons/fa";
+import {FaEdit} from "react-icons/fa";
 import Input from "components/Input";
 import {useUsers} from "context/UserContextProvider";
-import CustomMultiSelect from "components/CustomMultiSelect";
-import {useChannels} from "context/ChannelContextProvider";
+import CustomSelect from "components/CustomSelect";
 import {isEmpty} from "utils";
 import * as Yup from "yup";
 
-const CreateChannelForm = () => {
+const NewMessageForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const {users} = useUsers();
-  const {createChannel, errors} = useChannels();
+  const errors = [];
 
   const filterUsers = (inputValue) =>
     users
@@ -40,27 +38,20 @@ const CreateChannelForm = () => {
 
   return (
     <>
-      <IconButton icon={<FaPlus />} variant="ghost" isRound size="sm" onClick={onOpen} />
+      <Button w="full" borderRadius={0} gap={1} onClick={onOpen}>
+        New Message <FaEdit />
+      </Button>
 
       <Formik
-        initialValues={{name: "", user_ids: []}}
-        validationSchema={Yup.object({
-          name: Yup.string().required("Please input a channel name"),
-          user_ids: Yup.array().test({
-            message: "Please add at least 1 member",
-            test: (arr) => arr.length > 0,
-          }),
-        })}
-        onSubmit={(values) => {
-          const body = {...values, user_ids: values["user_ids"].map((i) => i.value)};
-          createChannel(body);
+        initialValues={{
+          receiver_id: "",
         }}
       >
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             <Form>
-              <ModalHeader>Create new channel</ModalHeader>
+              <ModalHeader>New Message</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
                 {!isEmpty(errors)
@@ -72,16 +63,16 @@ const CreateChannelForm = () => {
                     ))
                   : null}
                 <VStack w="full" gap={2}>
-                  <Input name="name" label="Channel name" />
                   <Field
-                    label="Members"
-                    component={CustomMultiSelect}
-                    name="user_ids"
+                    label="Recipient"
+                    component={CustomSelect}
+                    name="receiver_id"
                     placeholder="Start typing"
                     loadOptions={promiseOptions}
                     cacheOptions
                     defaultOptions
                   />
+                  <Input name="name" label="Channel name" />
                 </VStack>
               </ModalBody>
 
@@ -99,4 +90,4 @@ const CreateChannelForm = () => {
   );
 };
 
-export default CreateChannelForm;
+export default NewMessageForm;

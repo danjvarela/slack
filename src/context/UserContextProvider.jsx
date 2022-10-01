@@ -12,15 +12,20 @@ const UserContextProvider = ({children}) => {
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState([]);
 
+  const handleError = (errors, fn) => {
+    if (!isEmpty(errors)) return setErrors(Array.isArray(errors) ? errors : [errors]);
+    fn();
+  };
+
   const getUsers = async () => {
     const response = await getRequest("/api/v1/users", {headers: auth.headers});
-    if (!isEmpty(response.data.errors)) return setErrors(response.data.errors);
-    setUsers(response.data.data);
+    const {errors, data} = response;
+    handleError(errors, () => setUsers(data ?? []));
   };
 
   useEffect(() => {
     getUsers();
-  }, [auth]);
+  }, []);
 
   return (
     <UserContext.Provider value={{users, errors, getUsers}}>
