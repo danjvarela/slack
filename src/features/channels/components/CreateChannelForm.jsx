@@ -28,10 +28,6 @@ const CreateChannelForm = () => {
   const {users} = useUsers();
   const {channels, createChannel, errors} = useChannels();
 
-  useEffect(() => {
-    console.log(channels);
-  }, [channels]);
-
   const filterUsers = (inputValue) =>
     users
       .map((user) => ({value: user.id, label: user.email}))

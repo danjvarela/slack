@@ -23,8 +23,7 @@ const ChannelContextProvider = ({children}) => {
   const createChannel = async (body) => {
     const response = await postRequest("/api/v1/channels", body, {headers: auth.headers});
     if (!isEmpty(response.data.errors)) return setErrors(response.data.errors);
-    if (!isEmpty(response.data.data))
-      setChannels([...channels, response.data.data ?? []]);
+    setChannels([...channels, response.data.data ?? []]);
   };
 
   const getChannelDetails = async (id) => {
