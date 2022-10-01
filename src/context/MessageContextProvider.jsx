@@ -30,7 +30,7 @@ const MessageContextProvider = ({children}) => {
       params: params,
       headers: auth.headers,
     });
-    const {errors, data} = response;
+    const {errors, data} = response.data;
     handleError(errors, () => setMessages(data ?? []));
   };
 

@@ -19,7 +19,7 @@ const UserContextProvider = ({children}) => {
 
   const getUsers = async () => {
     const response = await getRequest("/api/v1/users", {headers: auth.headers});
-    const {errors, data} = response;
+    const {errors, data} = response.data;
     handleError(errors, () => setUsers(data ?? []));
   };
 

@@ -25,6 +25,8 @@ const NewMessageForm = () => {
   const {users} = useUsers();
   const errors = [];
 
+  console.log(users);
+
   const filterUsers = (inputValue) =>
     users
       .map((user) => ({value: user.id, label: user.email}))
