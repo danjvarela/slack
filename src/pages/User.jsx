@@ -30,17 +30,11 @@ const User = () => {
             <Channels />
             <DirectMessages />
           </Sidebar>
-          <Grid
-            flexGrow={1}
-            h="full"
-            maxH="full"
-            gridTemplateRows="auto 1fr auto"
-            alignItems="stretch"
-          >
+          <Grid flexGrow={1} h="full" maxH="full" gridTemplateRows="auto 1fr auto">
             <GridItem>
               <MessagesHeader />
             </GridItem>
-            <GridItem bg="gray.700" overflow="scroll" as={List}>
+            <GridItem as={VStack}>
               <MessagesSection />
             </GridItem>
             <GridItem w="full" p={5} as={HStack}>
