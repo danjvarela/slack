@@ -17,9 +17,10 @@ import {Formik, Form} from "formik";
 import {FaPlus} from "react-icons/fa";
 import Input from "components/Input";
 import {useChannels} from "context/ChannelContextProvider";
-import {isEmpty, pipe} from "utils";
+import {isEmpty} from "utils";
 import * as Yup from "yup";
 import UsersSelect from "components/UsersSelect";
+import {useEffect, useState} from "react";
 
 const CreateChannelForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -41,10 +42,6 @@ const CreateChannelForm = () => {
         onSubmit={(values, {resetForm}) => {
           const body = {...values, user_ids: values["user_ids"].map((i) => i.value)};
           createChannel(body);
-          if (isEmpty(errors)) {
-            resetForm();
-            onClose();
-          }
         }}
       >
         <Modal isOpen={isOpen} onClose={onClose}>

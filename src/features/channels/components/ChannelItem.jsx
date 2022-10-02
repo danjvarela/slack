@@ -7,7 +7,7 @@ const ChannelItem = ({channel}) => {
   const {setCurrentReceiver} = useReceivers();
 
   return (
-    <SidebarItem onClick={() => setCurrentReceiver(channel)}>
+    <SidebarItem onClick={() => setCurrentReceiver({...channel, class: "Channel"})}>
       <Avatar size="xs" name={name} />
       <Text>{name}</Text>
     </SidebarItem>

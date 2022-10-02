@@ -1,4 +1,13 @@
-import {VStack, HStack, Text, Avatar, List, ListItem} from "@chakra-ui/react";
+import {
+  VStack,
+  HStack,
+  Text,
+  Avatar,
+  List,
+  ListItem,
+  Grid,
+  GridItem,
+} from "@chakra-ui/react";
 import ColorModeSwitcher from "components/ColorModeSwitcher";
 import Header from "layouts/Header";
 import MessageBox from "features/messages/components/MessageBox";
@@ -7,6 +16,7 @@ import Channels from "features/channels/components/Channels";
 import DirectMessages from "features/directmessages/components/DirectMessages";
 import ProvidersWrapper from "layouts/ProvidersWrapper";
 import MessagesHeader from "features/messages/components/MessagesHeader";
+import MessagesSection from "features/messages/components/MessagesSection";
 
 const User = () => {
   return (
@@ -20,24 +30,23 @@ const User = () => {
             <Channels />
             <DirectMessages />
           </Sidebar>
-          <VStack flexGrow={1} h="full">
-            <MessagesHeader />
-            <VStack w="full" flexGrow={1} px={5}>
-              <List w="full" spacing={5}>
-                <ListItem display="flex" gap={3} alignItems="center">
-                  <Avatar name="Dan Abrahmov" size="sm" />
-                  <Text>Hi</Text>
-                </ListItem>
-                <ListItem display="flex" gap={3} alignItems="center">
-                  <Avatar name="Dan Abrahmov" size="sm" />
-                  <Text>Hi</Text>
-                </ListItem>
-              </List>
-            </VStack>
-            <HStack w="full" p={5}>
+          <Grid
+            flexGrow={1}
+            h="full"
+            maxH="full"
+            gridTemplateRows="auto 1fr auto"
+            alignItems="stretch"
+          >
+            <GridItem>
+              <MessagesHeader />
+            </GridItem>
+            <GridItem bg="gray.700" overflow="scroll" as={List}>
+              <MessagesSection />
+            </GridItem>
+            <GridItem w="full" p={5} as={HStack}>
               <MessageBox />
-            </HStack>
-          </VStack>
+            </GridItem>
+          </Grid>
         </HStack>
       </VStack>
     </ProvidersWrapper>

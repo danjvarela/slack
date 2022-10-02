@@ -8,24 +8,23 @@ import {
   ModalCloseButton,
   useDisclosure,
   Button,
-  Alert,
-  AlertIcon,
   VStack,
 } from "@chakra-ui/react";
-import {Formik, Form, Field} from "formik";
+import {Formik, Form} from "formik";
 import {FaEdit} from "react-icons/fa";
-import Input from "components/Input";
-import {useUsers} from "context/UserContextProvider";
-import {isEmpty, pipe} from "utils";
-import {useReceivers} from "context/ReceiverContextProvider";
+import {isEmpty} from "utils";
 import ReceiversSelect from "components/ReceiversSelect";
 import Textarea from "components/Textarea";
 import * as Yup from "yup";
 import {useMessages} from "context/MessageContextProvider";
+import {useReceivers} from "context/ReceiverContextProvider";
+import {useChannels} from "context/ChannelContextProvider";
 
 const NewMessageForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {sendMessage, errors} = useMessages();
+  const {sendMessage} = useMessages();
+  const {setCurrentReceiver} = useReceivers();
+  const {getChannelDetails, channels} = useChannels();
 
   return (
     <>
@@ -45,7 +44,7 @@ const NewMessageForm = () => {
           }),
           body: Yup.string().required("Message cannot be blank"),
         })}
-        onSubmit={(values) => {
+        onSubmit={async (values, {resetForm}) => {
           const {body, receiver} = values;
           const data = {
             receiver_id: receiver.value,
@@ -53,6 +52,12 @@ const NewMessageForm = () => {
             body,
           };
           sendMessage(data);
+          if (data.receiver_class === "Channel") {
+            const channel = channels.find((val) => val.id === data.receiver_id);
+            setCurrentReceiver({...channel, class: "Channel"});
+          }
+          onClose();
+          resetForm();
         }}
       >
         <Modal isOpen={isOpen} onClose={onClose}>

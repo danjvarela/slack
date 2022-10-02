@@ -31,7 +31,10 @@ const UserContextProvider = ({children}) => {
   }, [users]);
 
   useEffect(() => {
-    getUsers();
+    const id = setTimeout(() => {
+      getUsers();
+    }, 3000);
+    return () => clearTimeout(id);
   }, []);
 
   return (

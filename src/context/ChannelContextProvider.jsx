@@ -37,12 +37,14 @@ const ChannelContextProvider = ({children}) => {
   const createChannel = async (body) => {
     const response = await postRequest("/api/v1/channels", body, {headers: auth.headers});
     const {errors, data} = response.data;
-    handleError(errors, () => setChannels([...channels, data ?? []]));
+    handleError(errors, () => {
+      setChannels([...channels, data ?? []]);
+      setErrors([]);
+    });
   };
 
   const getChannelDetails = async (id) => {
-    const response = await getRequest("/api/v1/channels", {
-      params: {id: id},
+    const response = await getRequest(`/api/v1/channels/${id}`, {
       headers: auth.headers,
     });
     const {errors, data} = response.data;
@@ -60,8 +62,11 @@ const ChannelContextProvider = ({children}) => {
   };
 
   useEffect(() => {
-    getChannels();
-  }, []);
+    const id = setTimeout(() => {
+      getChannels();
+    }, 1000);
+    return () => clearTimeout(id);
+  });
 
   return (
     <ChannelContext.Provider

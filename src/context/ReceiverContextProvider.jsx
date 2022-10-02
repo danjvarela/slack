@@ -14,10 +14,6 @@ const ReceiverContextProvider = ({children}) => {
   const [receiverOptions, setReceiverOptions] = useState([]);
 
   useEffect(() => {
-    console.log(currentReceiver);
-  }, [currentReceiver]);
-
-  useEffect(() => {
     setReceiverOptions([...userOptions, ...channelOptions]);
   }, [channelOptions, userOptions]);
 
