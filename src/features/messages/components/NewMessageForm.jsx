@@ -16,21 +16,17 @@ import {Formik, Form, Field} from "formik";
 import {FaEdit} from "react-icons/fa";
 import Input from "components/Input";
 import {useUsers} from "context/UserContextProvider";
-import CustomSelect from "components/CustomSelect";
 import {isEmpty} from "utils";
-import * as Yup from "yup";
 
 const NewMessageForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {users} = useUsers();
+  const {userOptions} = useUsers();
   const errors = [];
 
-  console.log(users);
-
   const filterUsers = (inputValue) =>
-    users
-      .map((user) => ({value: user.id, label: user.email}))
-      .filter((data) => data.label.toLowerCase().includes(inputValue.toLowerCase()));
+    userOptions.filter((data) =>
+      data.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
 
   const promiseOptions = (inputValue) => {
     return new Promise((resolve) => {
@@ -65,15 +61,6 @@ const NewMessageForm = () => {
                     ))
                   : null}
                 <VStack w="full" gap={2}>
-                  <Field
-                    label="Recipient"
-                    component={CustomSelect}
-                    name="receiver_id"
-                    placeholder="Start typing"
-                    loadOptions={promiseOptions}
-                    cacheOptions
-                    defaultOptions
-                  />
                   <Input name="name" label="Channel name" />
                 </VStack>
               </ModalBody>

@@ -11,6 +11,7 @@ const UserContextProvider = ({children}) => {
   const {auth} = useAuth();
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [userOptions, setUserOptions] = useState([]);
 
   const handleError = (errors, fn) => {
     if (!isEmpty(errors)) return setErrors(Array.isArray(errors) ? errors : [errors]);
@@ -24,11 +25,15 @@ const UserContextProvider = ({children}) => {
   };
 
   useEffect(() => {
+    setUserOptions(users.map((user) => ({value: user.id, label: user.email})));
+  }, [users]);
+
+  useEffect(() => {
     getUsers();
   }, []);
 
   return (
-    <UserContext.Provider value={{users, errors, getUsers}}>
+    <UserContext.Provider value={{users, errors, getUsers, userOptions}}>
       {children}
     </UserContext.Provider>
   );

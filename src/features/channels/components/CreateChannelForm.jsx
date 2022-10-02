@@ -13,30 +13,29 @@ import {
   AlertIcon,
   VStack,
 } from "@chakra-ui/react";
-import {Formik, Form, Field} from "formik";
+import {Formik, Form} from "formik";
 import {FaPlus} from "react-icons/fa";
 import Input from "components/Input";
 import {useUsers} from "context/UserContextProvider";
-import CustomMultiSelect from "components/CustomMultiSelect";
 import {useChannels} from "context/ChannelContextProvider";
-import {isEmpty} from "utils";
+import {isEmpty, pipe} from "utils";
 import * as Yup from "yup";
+import Select from "components/Select";
 
 const CreateChannelForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {users} = useUsers();
+  const {userOptions} = useUsers();
   const {createChannel, errors} = useChannels();
 
-  const filterUsers = (inputValue) =>
-    users
-      .map((user) => ({value: user.id, label: user.email}))
-      .filter((data) => data.label.toLowerCase().includes(inputValue.toLowerCase()));
+  const filterOptions = (inputValue) =>
+    userOptions.filter((user) =>
+      user.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
 
-  const promiseOptions = (inputValue) => {
-    return new Promise((resolve) => {
-      resolve(filterUsers(inputValue));
+  const promiseOptions = (inputValue) =>
+    new Promise((resolve) => {
+      pipe(filterOptions, resolve)(inputValue);
     });
-  };
 
   return (
     <>
@@ -73,12 +72,11 @@ const CreateChannelForm = () => {
                   : null}
                 <VStack w="full" gap={2}>
                   <Input name="name" label="Channel name" />
-                  <Field
-                    label="Members"
-                    component={CustomMultiSelect}
+                  <Select
                     name="user_ids"
-                    placeholder="Start typing"
+                    isMulti
                     loadOptions={promiseOptions}
+                    label="Members"
                     cacheOptions
                     defaultOptions
                   />

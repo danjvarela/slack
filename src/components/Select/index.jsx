@@ -1,9 +1,10 @@
-import {FormControl, FormLabel, FormErrorMessage} from "@chakra-ui/react";
+import {FormControl, FormErrorMessage, FormLabel} from "@chakra-ui/react";
 import {AsyncSelect, createFilter} from "chakra-react-select";
-import {Field, useField} from "formik";
+import {useField} from "formik";
+import MenuList from "./MenuList";
 
-const CustomMultiSelect = ({label, ...props}) => {
-  const [_, meta, {setValue}] = useField(props.field.name);
+const Select = ({label, ...props}) => {
+  const [field, meta, {setValue}] = useField(props);
 
   const handleChange = (value) => {
     setValue(value);
@@ -12,13 +13,11 @@ const CustomMultiSelect = ({label, ...props}) => {
   return (
     <FormControl isInvalid={meta.touched && meta.error}>
       {label ? <FormLabel>{label}</FormLabel> : null}
-      <Field
-        as={AsyncSelect}
+      <AsyncSelect
         {...props}
         onChange={handleChange}
-        value={meta.value}
-        isMulti
-        filterOption={createFilter({ignoreAccents: "false"})}
+        filterOption={createFilter({ignoreAccents: false})}
+        components={{MenuList}}
       />
       {meta.touched && meta.error ? (
         <FormErrorMessage>{meta.error}</FormErrorMessage>
@@ -27,4 +26,4 @@ const CustomMultiSelect = ({label, ...props}) => {
   );
 };
 
-export default CustomMultiSelect;
+export default Select;
