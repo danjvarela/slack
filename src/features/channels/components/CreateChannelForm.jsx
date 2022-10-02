@@ -20,7 +20,7 @@ import {useUsers} from "context/UserContextProvider";
 import {useChannels} from "context/ChannelContextProvider";
 import {isEmpty, pipe} from "utils";
 import * as Yup from "yup";
-import Select from "components/Select";
+import UsersSelect from "components/UsersSelect";
 
 const CreateChannelForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -53,8 +53,10 @@ const CreateChannelForm = () => {
         onSubmit={(values, {resetForm}) => {
           const body = {...values, user_ids: values["user_ids"].map((i) => i.value)};
           createChannel(body);
-          resetForm();
-          onClose();
+          if (!isEmpty(errors)) {
+            resetForm();
+            onClose();
+          }
         }}
       >
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -74,14 +76,7 @@ const CreateChannelForm = () => {
                   : null}
                 <VStack w="full" gap={2}>
                   <Input name="name" label="Channel name" />
-                  <Select
-                    name="user_ids"
-                    isMulti
-                    loadOptions={promiseOptions}
-                    label="Members"
-                    cacheOptions
-                    defaultOptions
-                  />
+                  <UsersSelect name="user_ids" isMulti label="Members" />
                 </VStack>
               </ModalBody>
 
