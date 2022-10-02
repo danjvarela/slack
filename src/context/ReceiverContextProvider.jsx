@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useState, useMemo} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {useChannels} from "./ChannelContextProvider";
 import {useUsers} from "./UserContextProvider";
 
@@ -7,11 +7,15 @@ const ReceiverContext = createContext();
 const useReceivers = () => useContext(ReceiverContext);
 
 const ReceiverContextProvider = ({children}) => {
-  const [currentReceiver, setCurrentReceiver] = useState();
+  const [currentReceiver, setCurrentReceiver] = useState({});
   const [allReceivers, setAllReceivers] = useState({});
   const {users, userOptions} = useUsers();
   const {channels, channelOptions} = useChannels();
   const [receiverOptions, setReceiverOptions] = useState([]);
+
+  useEffect(() => {
+    console.log(currentReceiver);
+  }, [currentReceiver]);
 
   useEffect(() => {
     setReceiverOptions([...userOptions, ...channelOptions]);

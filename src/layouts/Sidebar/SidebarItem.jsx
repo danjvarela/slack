@@ -1,6 +1,6 @@
 import {Button, ListItem} from "@chakra-ui/react";
 
-const SidebarItem = ({children}) => {
+const SidebarItem = ({children, ...props}) => {
   return (
     <ListItem w="full">
       <Button
@@ -11,6 +11,7 @@ const SidebarItem = ({children}) => {
         size="sm"
         gap={2}
         variant="outline"
+        {...props}
       >
         {children}
       </Button>

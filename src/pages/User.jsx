@@ -6,6 +6,7 @@ import Sidebar from "layouts/Sidebar";
 import Channels from "features/channels/components/Channels";
 import DirectMessages from "features/directmessages/components/DirectMessages";
 import ProvidersWrapper from "layouts/ProvidersWrapper";
+import MessagesHeader from "features/messages/components/MessagesHeader";
 
 const User = () => {
   return (
@@ -20,10 +21,7 @@ const User = () => {
             <DirectMessages />
           </Sidebar>
           <VStack flexGrow={1} h="full">
-            <Header size="sm" variant="outlined" justifyContent="space-between">
-              <Text>Receiver Name</Text>
-              <Text>Avatars</Text>
-            </Header>
+            <MessagesHeader />
             <VStack w="full" flexGrow={1} px={5}>
               <List w="full" spacing={5}>
                 <ListItem display="flex" gap={3} alignItems="center">
