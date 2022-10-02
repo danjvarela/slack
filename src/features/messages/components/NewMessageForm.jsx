@@ -45,7 +45,7 @@ const NewMessageForm = () => {
           }),
           body: Yup.string().required("Message cannot be blank"),
         })}
-        onSubmit={async (values, {resetForm}) => {
+        onSubmit={(values) => {
           const {body, receiver} = values;
           const data = {
             receiver_id: receiver.value,
