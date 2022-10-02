@@ -50,9 +50,11 @@ const CreateChannelForm = () => {
             test: (arr) => arr.length > 0,
           }),
         })}
-        onSubmit={(values) => {
+        onSubmit={(values, {resetForm}) => {
           const body = {...values, user_ids: values["user_ids"].map((i) => i.value)};
           createChannel(body);
+          resetForm();
+          onClose();
         }}
       >
         <Modal isOpen={isOpen} onClose={onClose}>

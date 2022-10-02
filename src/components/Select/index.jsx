@@ -4,7 +4,7 @@ import {useField} from "formik";
 import MenuList from "./MenuList";
 
 const Select = ({label, ...props}) => {
-  const [field, meta, {setValue}] = useField(props);
+  const [_, meta, {setValue}] = useField(props);
 
   const handleChange = (value) => {
     setValue(value);
