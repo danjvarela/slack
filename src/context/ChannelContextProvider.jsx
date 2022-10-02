@@ -1,4 +1,4 @@
-import {createContext, useContext, useState, useEffect} from "react";
+import {createContext, useContext, useState, useEffect, useMemo} from "react";
 import {useAuth} from "context/AuthContextProvider";
 import {getRequest, postRequest} from "lib/axios";
 import {isEmpty} from "utils";
@@ -11,6 +11,17 @@ const ChannelContextProvider = ({children}) => {
   const {auth} = useAuth();
   const [errors, setErrors] = useState([]);
   const [channels, setChannels] = useState([]);
+  const [channelOptions, setChannelOptions] = useState([]);
+
+  useEffect(() => {
+    setChannelOptions(
+      channels.map((channel) => ({
+        label: channel.name,
+        value: channel.id,
+        class: "Channel",
+      }))
+    );
+  }, [channels]);
 
   const handleError = (errors, fn) => {
     if (!isEmpty(errors)) return setErrors(Array.isArray(errors) ? errors : [errors]);
@@ -61,6 +72,7 @@ const ChannelContextProvider = ({children}) => {
         createChannel,
         getChannelDetails,
         addMemberToChannel,
+        channelOptions,
       }}
     >
       {children}

@@ -25,7 +25,9 @@ const UserContextProvider = ({children}) => {
   };
 
   useEffect(() => {
-    setUserOptions(users.map((user) => ({value: user.id, label: user.email})));
+    setUserOptions(
+      users.map((user) => ({value: user.id, label: user.email, class: "User"}))
+    );
   }, [users]);
 
   useEffect(() => {

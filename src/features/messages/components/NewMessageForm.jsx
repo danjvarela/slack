@@ -16,23 +16,16 @@ import {Formik, Form, Field} from "formik";
 import {FaEdit} from "react-icons/fa";
 import Input from "components/Input";
 import {useUsers} from "context/UserContextProvider";
-import {isEmpty} from "utils";
+import {isEmpty, pipe} from "utils";
+import {useReceivers} from "context/ReceiverContextProvider";
+import ReceiversSelect from "components/ReceiversSelect";
+import Textarea from "components/Textarea";
+import * as Yup from "yup";
+import {useMessages} from "context/MessageContextProvider";
 
 const NewMessageForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {userOptions} = useUsers();
-  const errors = [];
-
-  const filterUsers = (inputValue) =>
-    userOptions.filter((data) =>
-      data.label.toLowerCase().includes(inputValue.toLowerCase())
-    );
-
-  const promiseOptions = (inputValue) => {
-    return new Promise((resolve) => {
-      resolve(filterUsers(inputValue));
-    });
-  };
+  const {sendMessage, errors} = useMessages();
 
   return (
     <>
@@ -42,7 +35,24 @@ const NewMessageForm = () => {
 
       <Formik
         initialValues={{
-          receiver_id: "",
+          receiver: {label: "", value: "", class: ""},
+          body: "",
+        }}
+        validationSchema={Yup.object({
+          receiver: Yup.object().test({
+            message: "Please add a recipient",
+            test: (obj) => !isEmpty(obj.value),
+          }),
+          body: Yup.string().required("Message cannot be blank"),
+        })}
+        onSubmit={async (values, {resetForm}) => {
+          const {body, receiver} = values;
+          const data = {
+            receiver_id: receiver.value,
+            receiver_class: receiver.class,
+            body,
+          };
+          sendMessage(data);
         }}
       >
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -52,16 +62,13 @@ const NewMessageForm = () => {
               <ModalHeader>New Message</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                {!isEmpty(errors)
-                  ? errors?.map((error, index) => (
-                      <Alert status="error" key={index}>
-                        <AlertIcon />
-                        {error}
-                      </Alert>
-                    ))
-                  : null}
                 <VStack w="full" gap={2}>
-                  <Input name="name" label="Channel name" />
+                  <ReceiversSelect
+                    name="receiver"
+                    label="Recipient"
+                    placeholder="Select a user or channel"
+                  />
+                  <Textarea name="body" label="Message" />
                 </VStack>
               </ModalBody>
 
