@@ -16,7 +16,6 @@ import {
 import {Formik, Form} from "formik";
 import {FaPlus} from "react-icons/fa";
 import Input from "components/Input";
-import {useUsers} from "context/UserContextProvider";
 import {useChannels} from "context/ChannelContextProvider";
 import {isEmpty, pipe} from "utils";
 import * as Yup from "yup";
@@ -24,18 +23,7 @@ import UsersSelect from "components/UsersSelect";
 
 const CreateChannelForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {userOptions} = useUsers();
   const {createChannel, errors} = useChannels();
-
-  const filterOptions = (inputValue) =>
-    userOptions.filter((user) =>
-      user.label.toLowerCase().includes(inputValue.toLowerCase())
-    );
-
-  const promiseOptions = (inputValue) =>
-    new Promise((resolve) => {
-      pipe(filterOptions, resolve)(inputValue);
-    });
 
   return (
     <>
@@ -53,7 +41,7 @@ const CreateChannelForm = () => {
         onSubmit={(values, {resetForm}) => {
           const body = {...values, user_ids: values["user_ids"].map((i) => i.value)};
           createChannel(body);
-          if (!isEmpty(errors)) {
+          if (isEmpty(errors)) {
             resetForm();
             onClose();
           }
