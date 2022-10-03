@@ -6,13 +6,14 @@ import {useMessages} from "context/MessageContextProvider";
 import Textarea from "components/Textarea";
 import {useReceivers} from "context/ReceiverContextProvider";
 import {useUsers} from "context/UserContextProvider";
+import {isEmpty} from "utils";
 
 const MessageBox = () => {
   const {users} = useUsers();
   const {sendMessage, setDirectMessages, directMessages} = useMessages();
   const {currentReceiver: receiver} = useReceivers();
 
-  return (
+  return !isEmpty(receiver) ? (
     <Formik
       initialValues={{body: ""}}
       validationSchema={Yup.object({
@@ -50,7 +51,7 @@ const MessageBox = () => {
         <IconButton icon={<MdSend />} colorScheme="green" type="submit" />
       </HStack>
     </Formik>
-  );
+  ) : null;
 };
 
 export default MessageBox;
