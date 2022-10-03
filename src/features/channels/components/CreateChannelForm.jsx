@@ -20,7 +20,6 @@ import {useChannels} from "context/ChannelContextProvider";
 import {isEmpty} from "utils";
 import * as Yup from "yup";
 import UsersSelect from "components/UsersSelect";
-import {useEffect, useState} from "react";
 
 const CreateChannelForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
