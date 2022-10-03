@@ -35,7 +35,7 @@ const User = () => {
             <Channels />
             <DirectMessages />
           </Sidebar>
-          <VStack flexGrow={1} overflowY="hidden">
+          <VStack flexGrow={1} overflowY="hidden" h="100%">
             <MessagesHeader />
             <MessagesSection />
             <HStack w="full" p={5}>

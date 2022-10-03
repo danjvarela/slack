@@ -2,6 +2,7 @@ const Header = {
   baseStyle: {
     w: "full",
     px: 5,
+    flexShrink: 0,
   },
   variants: {
     unstyled: {
