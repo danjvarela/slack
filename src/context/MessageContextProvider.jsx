@@ -11,6 +11,11 @@ const MessageContextProvider = ({children}) => {
   const {auth} = useAuth();
   const [messages, setMessages] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [directMessages, setDirectMessages] = useState([]);
+
+  useEffect(() => {
+    console.log(directMessages);
+  }, [directMessages]);
 
   const handleError = (errors, fn) => {
     if (!isEmpty(errors)) return setErrors(Array.isArray(errors) ? errors : [errors]);
@@ -35,7 +40,16 @@ const MessageContextProvider = ({children}) => {
   };
 
   return (
-    <MessageContext.Provider value={{messages, errors, sendMessage, getMessages}}>
+    <MessageContext.Provider
+      value={{
+        messages,
+        errors,
+        sendMessage,
+        getMessages,
+        directMessages,
+        setDirectMessages,
+      }}
+    >
       {children}
     </MessageContext.Provider>
   );

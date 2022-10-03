@@ -5,9 +5,11 @@ import {MdSend} from "react-icons/md";
 import {useMessages} from "context/MessageContextProvider";
 import Textarea from "components/Textarea";
 import {useReceivers} from "context/ReceiverContextProvider";
+import {useUsers} from "context/UserContextProvider";
 
 const MessageBox = () => {
-  const {sendMessage} = useMessages();
+  const {users} = useUsers();
+  const {sendMessage, setDirectMessages} = useMessages();
   const {currentReceiver: receiver} = useReceivers();
 
   return (
@@ -23,6 +25,10 @@ const MessageBox = () => {
           receiver_class: receiver.class,
         };
         sendMessage(completeBody);
+        setDirectMessages((prev) => [
+          ...prev,
+          users.find((val) => val.id === receiver.id),
+        ]);
         resetForm();
       }}
     >

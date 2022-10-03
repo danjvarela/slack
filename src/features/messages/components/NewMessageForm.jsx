@@ -19,12 +19,14 @@ import * as Yup from "yup";
 import {useMessages} from "context/MessageContextProvider";
 import {useReceivers} from "context/ReceiverContextProvider";
 import {useChannels} from "context/ChannelContextProvider";
+import {useUsers} from "context/UserContextProvider";
 
 const NewMessageForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {sendMessage} = useMessages();
+  const {sendMessage, setDirectMessages} = useMessages();
   const {setCurrentReceiver} = useReceivers();
-  const {getChannelDetails, channels} = useChannels();
+  const {channels} = useChannels();
+  const {users} = useUsers();
 
   return (
     <>
@@ -55,6 +57,11 @@ const NewMessageForm = () => {
           if (data.receiver_class === "Channel") {
             const channel = channels.find((val) => val.id === data.receiver_id);
             setCurrentReceiver({...channel, class: "Channel"});
+          }
+          if (data.receiver_class === "User") {
+            const user = users.find((val) => val.id === data.receiver_id);
+            setCurrentReceiver({...user, class: "User"});
+            setDirectMessages((prev) => [...prev, user]);
           }
           onClose();
           resetForm();

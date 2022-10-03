@@ -6,7 +6,7 @@ import ChannelItem from "./ChannelItem";
 import CreateChannelForm from "./CreateChannelForm";
 
 const Channels = () => {
-  const {channels, getChannelDetails} = useChannels();
+  const {channels} = useChannels();
 
   return (
     <SidebarGroup name="Channels" modifiers={<CreateChannelForm />}>
