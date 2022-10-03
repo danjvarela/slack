@@ -21,7 +21,7 @@ const ChannelMemberAvatars = ({channelId}) => {
   }, [channelId]);
 
   return (
-    <AvatarGroup size="xs">
+    <AvatarGroup size="xs" max={3}>
       {!isEmpty(channelMembers)
         ? channelMembers.map((member) => (
             <Avatar name={member?.email ?? ""} key={member?.id} />
