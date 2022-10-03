@@ -1,13 +1,4 @@
-import {
-  VStack,
-  HStack,
-  Text,
-  Avatar,
-  List,
-  ListItem,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
+import {VStack, HStack, Grid, Box} from "@chakra-ui/react";
 import ColorModeSwitcher from "components/ColorModeSwitcher";
 import Header from "layouts/Header";
 import MessageBox from "features/messages/components/MessageBox";
@@ -21,28 +12,38 @@ import MessagesSection from "features/messages/components/MessagesSection";
 const User = () => {
   return (
     <ProvidersWrapper>
-      <VStack w="full" h="100vh" spacing={0}>
+      <Grid
+        w="full"
+        h="100vh"
+        maxH="100vh"
+        spacing={0}
+        gridTemplateRows="auto 1fr"
+        alignItems="stretch"
+      >
         <Header justifyContent="flex-end" size="md" variant="outlined">
           <ColorModeSwitcher />
         </Header>
-        <HStack w="full" flexGrow={1} spacing={0}>
+        <Grid
+          w="full"
+          h="full"
+          overflowY="hidden"
+          spacing={0}
+          gridTemplateColumns="auto 1fr"
+          gridTemplateRows="full"
+        >
           <Sidebar>
             <Channels />
             <DirectMessages />
           </Sidebar>
-          <Grid flexGrow={1} h="full" maxH="full" gridTemplateRows="auto 1fr auto">
-            <GridItem>
-              <MessagesHeader />
-            </GridItem>
-            <GridItem as={VStack}>
-              <MessagesSection />
-            </GridItem>
-            <GridItem w="full" p={5} as={HStack}>
+          <VStack flexGrow={1} overflowY="hidden">
+            <MessagesHeader />
+            <MessagesSection />
+            <HStack w="full" p={5}>
               <MessageBox />
-            </GridItem>
-          </Grid>
-        </HStack>
-      </VStack>
+            </HStack>
+          </VStack>
+        </Grid>
+      </Grid>
     </ProvidersWrapper>
   );
 };

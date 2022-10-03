@@ -1,5 +1,4 @@
 import {ListItem, Avatar, Text, VStack, HStack} from "@chakra-ui/react";
-import {create} from "yup/lib/Reference";
 
 const MessageItem = ({message}) => {
   const {body, sender, created_at} = message;
