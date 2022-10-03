@@ -3,15 +3,18 @@ import Header from "layouts/Header";
 import {useReceivers} from "context/ReceiverContextProvider";
 import ChannelMemberAvatars from "features/channels/components/ChannelMemberAvatars";
 import {isEmpty} from "utils";
+import AddUserToChannelForm from "features/channels/components/AddUserToChannelForm";
 
 const MessagesHeader = () => {
   const {currentReceiver: receiver, members} = useReceivers();
 
   const title = receiver.class === "Channel" ? receiver.name : receiver.email;
 
-  return (
+  return !isEmpty(receiver) ? (
     <Header size="sm" variant="outlined" justifyContent="space-between">
-      <Heading size="sm">{title}</Heading>
+      <Heading size="sm">
+        {title} <AddUserToChannelForm />
+      </Heading>
       {receiver.class === "Channel" ? (
         <Menu>
           <MenuButton as={Button} variant="unstyled">
@@ -29,7 +32,7 @@ const MessagesHeader = () => {
         </Menu>
       ) : null}
     </Header>
-  );
+  ) : null;
 };
 
 export default MessagesHeader;

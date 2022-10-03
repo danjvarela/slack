@@ -56,9 +56,10 @@ const ChannelContextProvider = ({children}) => {
     const response = await postRequest("/api/v1/channel/add_member", body, {
       headers: auth.headers,
     });
-    const {errors, data} = response.data;
-    if (!isEmpty(errors)) return errors;
-    return data ?? {};
+    const {errors} = response.data;
+    handleError(errors, () => {
+      setErrors([]);
+    });
   };
 
   useEffect(() => {
