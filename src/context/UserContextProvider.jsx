@@ -35,7 +35,7 @@ const UserContextProvider = ({children}) => {
       getUsers();
     }, 3000);
     return () => clearTimeout(id);
-  }, []);
+  });
 
   return (
     <UserContext.Provider value={{users, errors, getUsers, userOptions}}>
