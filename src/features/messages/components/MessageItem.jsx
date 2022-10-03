@@ -11,7 +11,7 @@ const MessageItem = ({message}) => {
             {sender.email}
           </Text>
           <Text fontSize="xs" fontWeight="bold" opacity={0.5}>
-            {new Date(created_at).toLocaleTimeString({}, {timeStyle: "short"})}
+            {new Date(created_at).toLocaleString()}
           </Text>
         </HStack>
         <Text>{body}</Text>

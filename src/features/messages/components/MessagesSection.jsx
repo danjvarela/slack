@@ -16,7 +16,7 @@ const MessagesSection = () => {
   });
 
   return (
-    <List w="full" h="90%" overflowY="scroll" spacing={5} px={5}>
+    <List w="full" h="100%" overflowY="scroll" spacing={5} px={5}>
       {!isEmpty(messages)
         ? messages.map((message) => <MessageItem key={message.id} message={message} />)
         : null}
