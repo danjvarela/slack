@@ -1,5 +1,4 @@
 import SidebarGroup from "layouts/Sidebar/SidebarGroup";
-import CreateChannelForm from "features/channels/components/CreateChannelForm";
 import {useMessages} from "context/MessageContextProvider";
 import DirectMessageItem from "./DirectMessageItem";
 import {isEmpty} from "utils";

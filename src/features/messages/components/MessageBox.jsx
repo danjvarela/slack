@@ -9,7 +9,7 @@ import {useUsers} from "context/UserContextProvider";
 
 const MessageBox = () => {
   const {users} = useUsers();
-  const {sendMessage, setDirectMessages} = useMessages();
+  const {sendMessage, setDirectMessages, directMessages} = useMessages();
   const {currentReceiver: receiver} = useReceivers();
 
   return (
@@ -25,10 +25,17 @@ const MessageBox = () => {
           receiver_class: receiver.class,
         };
         sendMessage(completeBody);
-        setDirectMessages((prev) => [
-          ...prev,
-          users.find((val) => val.id === receiver.id),
-        ]);
+        if (receiver.class === "User") {
+          const receiverExists = directMessages
+            .map((user) => user.id)
+            .includes(receiver.id);
+          if (!receiverExists) {
+            setDirectMessages((prev) => [
+              ...prev,
+              users.find((val) => val.id === receiver.id),
+            ]);
+          }
+        }
         resetForm();
       }}
     >

@@ -13,10 +13,6 @@ const MessageContextProvider = ({children}) => {
   const [errors, setErrors] = useState([]);
   const [directMessages, setDirectMessages] = useState([]);
 
-  useEffect(() => {
-    console.log(directMessages);
-  }, [directMessages]);
-
   const handleError = (errors, fn) => {
     if (!isEmpty(errors)) return setErrors(Array.isArray(errors) ? errors : [errors]);
     fn();
