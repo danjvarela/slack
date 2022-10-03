@@ -10,7 +10,7 @@ const MessagesHeader = () => {
 
   return (
     <Header size="sm" variant="outlined" justifyContent="space-between">
-      <Heading size="md">{title}</Heading>
+      <Heading size="sm">{title}</Heading>
       <Text>Avatars</Text>
     </Header>
   );
