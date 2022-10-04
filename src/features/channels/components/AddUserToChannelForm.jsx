@@ -27,10 +27,6 @@ const AddUserToChannelForm = () => {
   const {currentReceiver: receiver} = useReceivers();
   const {addMemberToChannel, errors} = useChannels();
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
   return (
     <>
       <IconButton
