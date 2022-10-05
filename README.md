@@ -66,3 +66,83 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+--
+# Testing Overview
+
+## Why Test?
+
+- For product quality!
+- For developer condfidence
+
+## Software Lifecycle Phases 
+* Planning => Design (UI/UX or Architecture) => 
+
+Develop (Implementation) => *Testing* => Deploy / Release (Production)
+
+
+## Levels of Testing (Org-Wise)
+
+--- Development
+
+0. Linting 
+- (eslint, prettier) 
+- Standardization
+- Type checking
+
+-> dev-wise
+
+1. Feature Testing
+- each feature or iteration before production
+
+2. Integration Testing
+- integration part: merging of work between two different contexts
+
+3. End-to-End Testing
+- from user to database scope
+
+4. Regression Testing
+- Making sure that the previous features released still works!
+
+--- Release to Production
+
+5. Post-Production Testing
+- the database being used here is on prod!
+
+
+## Levels of Testing (Dev-Wise)
+
+0. Static Testing 
+- Linting / Typechecking
+1. Unit Testing 
+- testing a function (e.g. utility)
+2. Component Testing
+- whole React component
+3. Integration Testing
+- Feature level
+4. End-to-End
+- App level
+- Playwright , Puppeteer
+- Headless (browser runs in the background, without ui), Headful (browser literally opens)
+
+
+Types Testing
+Behavior Driven (Kung ano yung business rules, and most critical, yun muna)
+Test-Driven
+- RED -> Green -> Refactor
+
+AAA
+Arrange -> render (render, screen)
+Act -> fireEvent (input username and password then click submit)
+Assert -> assertion of expectation (it should redirect to dashboard if user credentials is correct)
+
+
+# RoR
+- Rspec
+
+Tests - QA Testing
+Specs - Specification, Codebase is a documentation of the Busines Rules, Dev Testing
+
+
+

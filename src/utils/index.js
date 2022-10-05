@@ -7,6 +7,10 @@ const isEmpty = (value) => {
   return false;
 };
 
+const isNotEmpty = (value) => {
+  return !isEmpty(value);
+};
+
 const pipe =
   (...fns) =>
   (arg) =>
@@ -18,4 +22,4 @@ const curry = (fn) => {
   };
 };
 
-export {isEmpty, pipe, curry};
+export {isEmpty, pipe, curry, isNotEmpty};
