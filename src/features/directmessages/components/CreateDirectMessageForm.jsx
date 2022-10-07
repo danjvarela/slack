@@ -17,15 +17,15 @@ import {isEmpty} from "utils";
 import UsersSelect from "components/UsersSelect";
 import Textarea from "components/Textarea";
 import * as Yup from "yup";
-import {useMessages} from "context/MessageContextProvider";
-import {useReceivers} from "context/ReceiverContextProvider";
-import {useUsers} from "context/UserContextProvider";
+import useMessages from "hooks/useMessages";
+import messageStore from "stores/messageStore";
+import receiverStore from "stores/receiverStore";
+import userStore from "stores/userStore";
 
 const CreateDirectMessageForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {sendMessage, setDirectMessages} = useMessages();
-  const {setCurrentReceiver} = useReceivers();
-  const {users} = useUsers();
+  const {sendMessage} = useMessages();
+  const users = userStore.use.users();
 
   return (
     <>
@@ -52,8 +52,8 @@ const CreateDirectMessageForm = () => {
           };
           sendMessage(data);
           const user = users.find((val) => val.id === data.receiver_id);
-          setCurrentReceiver({...user, class: "User"});
-          setDirectMessages((prev) => [...prev, user]);
+          receiverStore.set.currentReceiver({...user, class: "User"});
+          messageStore.set.directMessages([...messageStore.get.directMessages, user]);
           onClose();
           resetForm();
         }}

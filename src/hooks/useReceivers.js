@@ -1,7 +1,7 @@
-import {useChannels} from "context/ChannelContextProvider";
 import {useEffect} from "react";
 import receiverStore from "stores/receiverStore";
 import selectOptionStore from "stores/selectOptionStore";
+import useChannels from "./useChannels";
 
 const useReceivers = () => {
   const {getChannelDetails} = useChannels();
@@ -11,7 +11,7 @@ const useReceivers = () => {
   const currentReceiver = receiverStore.use.currentReceiver();
 
   useEffect(() => {
-    if (currentReceiver.class === "Channel") {
+    if (currentReceiver?.class === "Channel") {
       getChannelDetails(currentReceiver.id)
         .then((channel) =>
           channel.channel_members.map((member) =>

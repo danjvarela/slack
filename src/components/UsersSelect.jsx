@@ -1,9 +1,9 @@
-import {useUsers} from "context/UserContextProvider";
 import Select from "./Select";
 import {pipe} from "utils";
+import selectOptionStore from "stores/selectOptionStore";
 
 const UsersSelect = (props) => {
-  const {userOptions} = useUsers();
+  const userOptions = selectOptionStore.use.users();
 
   const filterOptions = (inputValue) =>
     userOptions.filter((user) =>

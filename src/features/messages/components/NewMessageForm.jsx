@@ -16,17 +16,17 @@ import {isEmpty} from "utils";
 import ReceiversSelect from "components/ReceiversSelect";
 import Textarea from "components/Textarea";
 import * as Yup from "yup";
-import {useMessages} from "context/MessageContextProvider";
-import {useReceivers} from "context/ReceiverContextProvider";
-import {useChannels} from "context/ChannelContextProvider";
-import {useUsers} from "context/UserContextProvider";
+import useMessages from "hooks/useMessages";
+import receiverStore from "stores/receiverStore";
+import channelStore from "stores/channelStore";
+import userStore from "stores/userStore";
+import messageStore from "stores/messageStore";
 
 const NewMessageForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {sendMessage, setDirectMessages} = useMessages();
-  const {setCurrentReceiver} = useReceivers();
-  const {channels} = useChannels();
-  const {users} = useUsers();
+  const {sendMessage} = useMessages();
+  const channels = channelStore.use.channels();
+  const users = userStore.use.users();
 
   return (
     <>
@@ -56,12 +56,12 @@ const NewMessageForm = () => {
           sendMessage(data);
           if (data.receiver_class === "Channel") {
             const channel = channels.find((val) => val.id === data.receiver_id);
-            setCurrentReceiver({...channel, class: "Channel"});
+            receiverStore.set.currentReceiver({...channel, class: "Channel"});
           }
           if (data.receiver_class === "User") {
             const user = users.find((val) => val.id === data.receiver_id);
-            setCurrentReceiver({...user, class: "User"});
-            setDirectMessages((prev) => [...prev, user]);
+            receiverStore.set.currentReceiver({...user, class: "User"});
+            messageStore.set.directMessages([...messageStore.get.directMessages, user]);
           }
           onClose();
           resetForm();

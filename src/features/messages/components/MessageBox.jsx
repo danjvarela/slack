@@ -2,16 +2,18 @@ import {IconButton, HStack} from "@chakra-ui/react";
 import {Formik, Form} from "formik";
 import * as Yup from "yup";
 import {MdSend} from "react-icons/md";
-import {useMessages} from "context/MessageContextProvider";
 import Textarea from "components/Textarea";
-import {useReceivers} from "context/ReceiverContextProvider";
-import {useUsers} from "context/UserContextProvider";
 import {isEmpty} from "utils";
+import messageStore from "stores/messageStore";
+import useMessages from "hooks/useMessages";
+import receiverStore from "stores/receiverStore";
+import userStore from "stores/userStore";
 
 const MessageBox = () => {
-  const {users} = useUsers();
-  const {sendMessage, setDirectMessages, directMessages} = useMessages();
-  const {currentReceiver: receiver} = useReceivers();
+  const {sendMessage} = useMessages();
+  const users = userStore.use.users();
+  const directMessages = messageStore.use.directMessages();
+  const receiver = receiverStore.use.currentReceiver();
 
   return !isEmpty(receiver) ? (
     <Formik
@@ -31,8 +33,8 @@ const MessageBox = () => {
             .map((user) => user.id)
             .includes(receiver.id);
           if (!receiverExists) {
-            setDirectMessages((prev) => [
-              ...prev,
+            messageStore.set.directMessages([
+              ...messageStore.get.directMessages,
               users.find((val) => val.id === receiver.id),
             ]);
           }

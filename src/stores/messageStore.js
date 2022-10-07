@@ -1,11 +1,11 @@
 import {createStore} from "@udecode/zustood";
 
 const messageStore = createStore("message")(
-  () => ({
+  {
     messages: [],
     directMessages: [],
     errMessages: [],
-  }),
+  },
   {
     persist: {
       enabled: true,

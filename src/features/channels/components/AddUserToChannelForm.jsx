@@ -17,15 +17,17 @@ import {Formik, Form} from "formik";
 import {isEmpty} from "utils";
 import UsersSelect from "components/UsersSelect";
 import * as Yup from "yup";
-import {useReceivers} from "context/ReceiverContextProvider";
 import {ChevronDownIcon} from "@chakra-ui/icons";
-import {useChannels} from "context/ChannelContextProvider";
-import {useEffect} from "react";
+import useChannels from "hooks/useChannels";
+import receiverStore from "stores/receiverStore";
+import channelStore from "stores/channelStore";
 
 const AddUserToChannelForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {currentReceiver: receiver} = useReceivers();
-  const {addMemberToChannel, errors} = useChannels();
+
+  const receiver = receiverStore.use.currentReceiver();
+  const errMessages = channelStore.use.errMessages();
+  const {addMemberToChannel} = useChannels();
 
   return (
     <>
@@ -62,11 +64,11 @@ const AddUserToChannelForm = () => {
               <ModalHeader>Add user to channel</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                {!isEmpty(errors)
-                  ? errors?.map((error, index) => (
+                {!isEmpty(errMessages)
+                  ? errMessages?.map((message, index) => (
                       <Alert status="error" key={index}>
                         <AlertIcon />
-                        {error}
+                        {message}
                       </Alert>
                     ))
                   : null}

@@ -1,9 +1,11 @@
-import {useAuth} from "context/AuthContextProvider";
+import useAuth from "hooks/useAuth";
+import authStore from "stores/authStore";
 import * as Yup from "yup";
 import SignupFormRenderer from "./SignupFormRenderer";
 
 const SignupForm = (props) => {
-  const {signup, errors} = useAuth();
+  const {signup} = useAuth();
+  const errMessages = authStore.use.errMessages();
 
   const formikProps = {
     initialValues: {email: "", password: "", password_confirmation: ""},
@@ -17,7 +19,9 @@ const SignupForm = (props) => {
     onSubmit: signup,
   };
 
-  return <SignupFormRenderer formikProps={formikProps} errors={errors} {...props} />;
+  return (
+    <SignupFormRenderer formikProps={formikProps} errMessages={errMessages} {...props} />
+  );
 };
 
 export default SignupForm;

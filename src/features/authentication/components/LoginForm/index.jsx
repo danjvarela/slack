@@ -1,9 +1,11 @@
-import {useAuth} from "context/AuthContextProvider";
+import useAuth from "hooks/useAuth";
+import authStore from "stores/authStore";
 import * as Yup from "yup";
 import LoginFormRenderer from "./LoginFormRenderer";
 
 const LoginForm = (props) => {
-  const {login, errors} = useAuth();
+  const {login} = useAuth();
+  const errMessages = authStore.use.errMessages();
 
   const formikProps = {
     initialValues: {email: "", password: ""},
@@ -14,7 +16,9 @@ const LoginForm = (props) => {
     onSubmit: login,
   };
 
-  return <LoginFormRenderer formikProps={formikProps} errors={errors} {...props} />;
+  return (
+    <LoginFormRenderer formikProps={formikProps} errMessages={errMessages} {...props} />
+  );
 };
 
 export default LoginForm;

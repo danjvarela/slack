@@ -16,14 +16,16 @@ import {
 import {Formik, Form} from "formik";
 import {FaPlus} from "react-icons/fa";
 import Input from "components/Input";
-import {useChannels} from "context/ChannelContextProvider";
 import {isEmpty} from "utils";
 import * as Yup from "yup";
 import UsersSelect from "components/UsersSelect";
+import useChannels from "hooks/useChannels";
+import channelStore from "stores/channelStore";
 
 const CreateChannelForm = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {createChannel, errors} = useChannels();
+  const {createChannel} = useChannels();
+  const errMessages = channelStore.use.errMessages();
 
   return (
     <>
@@ -38,7 +40,7 @@ const CreateChannelForm = () => {
             test: (arr) => arr.length > 0,
           }),
         })}
-        onSubmit={(values, {resetForm}) => {
+        onSubmit={(values) => {
           const body = {...values, user_ids: values["user_ids"].map((i) => i.value)};
           createChannel(body);
         }}
@@ -50,11 +52,11 @@ const CreateChannelForm = () => {
               <ModalHeader>Create new channel</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                {!isEmpty(errors)
-                  ? errors?.map((error, index) => (
+                {!isEmpty(errMessages)
+                  ? errMessages?.map((message, index) => (
                       <Alert status="error" key={index}>
                         <AlertIcon />
-                        {error}
+                        {message}
                       </Alert>
                     ))
                   : null}

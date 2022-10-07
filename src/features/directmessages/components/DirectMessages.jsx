@@ -1,11 +1,11 @@
 import SidebarGroup from "layouts/Sidebar/SidebarGroup";
-import {useMessages} from "context/MessageContextProvider";
 import DirectMessageItem from "./DirectMessageItem";
 import {isEmpty} from "utils";
 import CreateDirectMessageForm from "./CreateDirectMessageForm";
+import messageStore from "stores/messageStore";
 
 const DirectMessages = () => {
-  const {directMessages} = useMessages();
+  const directMessages = messageStore.use.directMessages();
 
   return (
     <SidebarGroup name="Direct Messages" modifiers={<CreateDirectMessageForm />}>

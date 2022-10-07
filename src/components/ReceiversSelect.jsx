@@ -1,9 +1,9 @@
-import {useReceivers} from "context/ReceiverContextProvider";
 import Select from "./Select";
 import {pipe} from "utils";
+import selectOptionStore from "stores/selectOptionStore";
 
 const ReceiversSelect = (props) => {
-  const {receiverOptions} = useReceivers();
+  const receiverOptions = selectOptionStore.use.receivers();
 
   const filterOptions = (inputValue) =>
     receiverOptions.filter((receiver) =>

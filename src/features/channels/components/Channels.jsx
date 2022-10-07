@@ -1,12 +1,11 @@
-import {useChannels} from "context/ChannelContextProvider";
 import SidebarGroup from "layouts/Sidebar/SidebarGroup";
-import {useMemo} from "react";
+import channelStore from "stores/channelStore";
 import {isEmpty} from "utils";
 import ChannelItem from "./ChannelItem";
 import CreateChannelForm from "./CreateChannelForm";
 
 const Channels = () => {
-  const {channels} = useChannels();
+  const channels = channelStore.use.channels();
 
   return (
     <SidebarGroup name="Channels" modifiers={<CreateChannelForm />}>

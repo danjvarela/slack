@@ -32,7 +32,7 @@ const useAuth = () => {
   }, []);
 
   useEffect(() => {
-    if (auth?.id) navigate(`/users/${auth.id}`);
+    if (auth?.data?.id) navigate(`/users/${auth.data?.id}`);
   }, [auth]);
 
   return {login, signup, logout};

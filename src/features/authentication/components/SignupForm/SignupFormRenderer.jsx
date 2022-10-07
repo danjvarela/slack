@@ -6,16 +6,16 @@ import Input from "components/Input";
 import PasswordInput from "components/PasswordInput";
 import {isEmpty} from "utils";
 
-const SignupFormRenderer = ({formikProps, errors, ...props}) => {
+const SignupFormRenderer = ({formikProps, errMessages, ...props}) => {
   return (
     <Formik {...formikProps}>
       <Card {...props} gap={5}>
         <VStack as={Form} w="full" gap={5}>
-          {!isEmpty(errors)
-            ? errors?.map((error, index) => (
+          {!isEmpty(errMessages)
+            ? errMessages?.map((message, index) => (
                 <Alert status="error" key={index}>
                   <AlertIcon />
-                  {error}
+                  {message}
                 </Alert>
               ))
             : null}

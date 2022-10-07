@@ -1,14 +1,14 @@
 import {Avatar, AvatarGroup} from "@chakra-ui/react";
-import {useReceivers} from "context/ReceiverContextProvider";
+import selectOptionStore from "stores/selectOptionStore";
 import {isEmpty} from "utils";
 
 const ChannelMemberAvatars = () => {
-  const {members} = useReceivers();
+  const channelMembers = selectOptionStore.use.channelMembers();
 
   return (
     <AvatarGroup size="xs" max={3}>
-      {!isEmpty(members)
-        ? members.map((member) =>
+      {!isEmpty(channelMembers)
+        ? channelMembers.map((member) =>
             member ? <Avatar name={member.email} key={member.uid} /> : null
           )
         : null}

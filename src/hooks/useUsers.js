@@ -9,11 +9,11 @@ const useUsers = () => {
   const users = userStore.use.users();
 
   const getUsers = useCallback(async () => {
-    const response = await getRequest("/api/v1/users", {headers: auth?.headers});
+    const response = await getRequest("/api/v1/users", {headers: auth?.headers ?? {}});
     const {errors, data} = response.data;
     userStore.set.errMessages(Array.isArray(errors) ? errors : [errors]);
     userStore.set.users(data ?? []);
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     selectOptionStore.set.users(

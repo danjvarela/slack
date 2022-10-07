@@ -1,14 +1,20 @@
 import {Heading, Menu, MenuButton, MenuList, MenuItem, Button} from "@chakra-ui/react";
 import Header from "layouts/Header";
-import {useReceivers} from "context/ReceiverContextProvider";
 import ChannelMemberAvatars from "features/channels/components/ChannelMemberAvatars";
 import {isEmpty} from "utils";
 import AddUserToChannelForm from "features/channels/components/AddUserToChannelForm";
+import receiverStore from "stores/receiverStore";
+import selectOptionStore from "stores/selectOptionStore";
+import {useEffect, useState} from "react";
 
 const MessagesHeader = () => {
-  const {currentReceiver: receiver, members} = useReceivers();
+  const receiver = receiverStore.use.currentReceiver();
+  const channelMembers = selectOptionStore.use.channelMembers();
+  const [title, setTitle] = useState();
 
-  const title = receiver.class === "Channel" ? receiver.name : receiver.email;
+  useEffect(() => {
+    if (receiver) setTitle(receiver.class === "Channel" ? receiver.name : receiver.email);
+  }, [receiver]);
 
   return !isEmpty(receiver) ? (
     <Header size="sm" variant="outlined" justifyContent="space-between">
@@ -20,9 +26,9 @@ const MessagesHeader = () => {
           <MenuButton as={Button} variant="unstyled">
             <ChannelMemberAvatars />
           </MenuButton>
-          {!isEmpty(members) ? (
+          {!isEmpty(channelMembers) ? (
             <MenuList>
-              {members.map((member) =>
+              {channelMembers.map((member) =>
                 member?.email ? (
                   <MenuItem key={member?.uid}>{member?.email}</MenuItem>
                 ) : null

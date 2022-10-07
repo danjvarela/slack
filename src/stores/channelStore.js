@@ -1,8 +1,8 @@
 import {createStore} from "@udecode/zustood";
 
-const channelStore = createStore("channel")(() => ({
+const channelStore = createStore("channel")({
   channels: [],
   errMessages: [],
-}));
+});
 
 export default channelStore;
