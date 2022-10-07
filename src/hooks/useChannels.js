@@ -3,6 +3,7 @@ import authStore from "stores/authStore";
 import channelStore from "stores/channelStore";
 import selectOptionStore from "stores/selectOptionStore";
 import {isEmpty} from "utils";
+import {postRequest, getRequest} from "lib/axios";
 
 const useChannels = () => {
   const auth = authStore.use.auth();
@@ -41,7 +42,7 @@ const useChannels = () => {
   }, []);
 
   useEffect(() => {
-    selectOptionStore.set.channelOptions(
+    selectOptionStore.set.channels(
       channels.map((channel) => ({
         label: channel.name,
         value: channel.id,
